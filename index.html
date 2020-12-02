@@ -25,11 +25,11 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button onclick="count1('phone',false)" id="phone-minus" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" value="1" id="phoneTaken">
+                           <button onclick="count1('phone',true)" id="phone-plus" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$<span id="phoneMoney">1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -43,12 +43,11 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
-
+                           <button onclick="count1('case1',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="case1Taken" type="text" class="form-control text-center" value="1">
+                           <button onclick="count1('case1',true)"class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="case1Money">59</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +63,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$<span id="subTotal1">1,278</span></h5>
+                        <h5>$<span id="taxCount">0</span></h5>
+                        <h5> $ <span id="totalCost">1,278</span></h5>
                      </div>
                   </div>
                </div>
@@ -77,6 +76,175 @@
          </div>
       </div>
    </section>
+
+
+<script>
+
+function count1(products,isIncrease) {
+      // let taken=document.getElementById(products+"Taken").value
+      // let takenConvert=parseInt(taken)
+      let takenConvert=selectedProducts(products)
+      if (isIncrease==true) {
+         takenConvert++
+      } if(isIncrease==false && takenConvert>0) {
+         takenConvert--
+      }
+      document.getElementById(products+"Taken").value=takenConvert
+      if (products=='phone') {
+         price=takenConvert*1219
+      }
+      if (products=='case1') {
+         price=takenConvert*59
+      }
+      
+      document.getElementById(products+"Money").innerText=price
+
+      calculateTotal()
+   }
+
+   function calculateTotal() {
+      let phoneValue=selectedProducts('phone')
+      let caseValue=selectedProducts('case1')
+      let subTotal=phoneValue*1219+caseValue*59
+      document.getElementById('subTotal1').innerText=subTotal
+
+      let tax1=Math.round(subTotal*0.1)
+      document.getElementById('taxCount').innerText=tax1
+
+      let grandTotal=subTotal+tax1
+      document.getElementById('totalCost').innerText=grandTotal
+   }
+   
+   function selectedProducts(product) {
+      let input1=document.getElementById(product+'Taken').value
+      let inputConvert=parseInt(input1)
+      return inputConvert
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   // document.getElementById('phone-plus').addEventListener('click',function () {
+   //    countPhone(true);
+   // })
+   // document.getElementById('phone-minus').addEventListener('click',function () {
+   //    countPhone(false);
+   // })
+
+
+
+
+   // function countPhone(isIncrease) {
+   //    let phoneTaken=document.getElementById('selectedPhoneCount').value
+   //    let phoneTakenConvert=parseInt(phoneTaken)
+   //    if (isIncrease==true) {
+   //       phoneTakenConvert++
+   //    } if(isIncrease==false && phoneTakenConvert>0) {
+   //       phoneTakenConvert--
+   //    }
+   //    document.getElementById('selectedPhoneCount').value=phoneTakenConvert
+   //    phonePrice=phoneTakenConvert*1219
+   //    document.getElementById('phoneMoney').innerText=phonePrice
+   // }
+
+
+
+
+
+
+
+   // document.getElementById('phone-plus').addEventListener('click',function () {
+   //    phoneCount(true)
+
+      // document.getElementById('number').value=convert
+
+      // let taka= document.getElementById('phoneMoney').innerText
+      // taka=parseFloat(taka)
+      // let newTaka=taka+1219
+      // document.getElementById('phoneMoney').innerText=newTaka
+
+      // let subTotal1=document.getElementById('subTotal').innerText
+      // subTotal1=parseFloat(subTotal1)
+      // let newSubTotal=subTotal1+1219
+      // document.getElementById('subTotal').innerText=newSubTotal
+
+
+      // let costTotal1=document.getElementById('totalCost').innerText
+      // costTotal1=parseFloat(costTotal1)
+      // let newTotal=costTotal1+1219
+      // document.getElementById('totalCost').innerText=newTotal
+
+   // });
+
+   // document.getElementById('phone-minus').addEventListener('click',function () {
+   //    phoneCount(false)
+   //    });
+
+   // function phoneCount(isIncrease) {
+   //    let convert=document.getElementById('number')
+   //    convert1=parseInt(convert.value)
+   //    let convert2=convert1
+   //    if (isIncrease==true) {
+   //       convert2=convert1++
+   //    } if(isIncrease==false && isIncrease>0){
+   //       convert2=convert1--
+   //    }
+   //    convert.value=convert2
+   //    let amount=document.getElementById('phoneMoney')
+   //    let money1=convert2*1219
+   //    amount.innerText=money1
+   // }
+
+   // document.getElementById('phone-minus').addEventListener('click',function () {
+   //    let convert1=document.getElementById('number').value
+   //    convert1=parseFloat(convert1)
+   //    convert1--
+   //    document.getElementById('number').value=convert1
+
+   //    let taka= document.getElementById('phoneMoney').innerText
+   //    taka=parseFloat(taka)
+   //    let newTaka=taka-1219
+   //    document.getElementById('phoneMoney').innerText=newTaka
+
+   //    let subTotal1=document.getElementById('subTotal').innerText
+   //    subTotal1=parseFloat(subTotal1)
+   //    let newSubTotal=subTotal1-1219
+   //    document.getElementById('subTotal').innerText=newSubTotal
+
+
+   //    let costTotal1=document.getElementById('totalCost').innerText
+   //    costTotal1=parseFloat(costTotal1)
+   //    let newTotal=costTotal1-1219
+   //    document.getElementById('totalCost').innerText=newTotal
+      
+
+   // })
+
+
+</script>
+
 </body>
 
 </html>
